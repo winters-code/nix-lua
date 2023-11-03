@@ -5,8 +5,8 @@ Position.__index = Position
 function Position.new(row, column)
     local self = setmetatable({}, Position)
 
-    self.row = row
-    self.column = column
+    self.row = row or 0
+    self.column = column or 0
 
     return self
 end
@@ -17,6 +17,14 @@ end
 
 function Position:GetPositionString()
     return string.format("row %d, column %d", self.row, self.column)
+end
+function Position:Advance(toNewColumn)
+    if toNewColumn then
+        self.column = self.column + 1
+        self.row = 0
+    else
+        self.row = self.row + 1
+    end
 end
 
 return Position
