@@ -4,6 +4,7 @@ Lexer.__index = Lexer
 
 local Position = require("libs.gen.position")
 local Token = require("libs.lex.token")
+local IllegalCharError = require("libs.gen.error.IllegalCharError")
 require("libs.rebind")
 require("libs.consts")
 
@@ -21,13 +22,14 @@ end
 
 function Lexer:Advance()
     self.position:Advance()
+    self.index = self.index + 1
 end
 
 function Lexer:CreateNumber()
     local stringRep = self.currentChar
     local dots = 0
     while tonumber(self.currentChar) ~= nil or self.currentChar == "." do
-        self.index = self.index + 1
+        self:Advance()
         self.currentChar = string.sub(self.text, self.index, self.index)
         if self.currentChar == "." then
             dots = dots + 1
@@ -41,17 +43,19 @@ end
 function Lexer:Tokenize()
     local Tokens = {}
 
-    for i = 1, #self.text do
-        if self.index <= i then
-            self.index = i
-            self.currentChar = string.sub(self.text, i, i)
+    while self.currentChar ~= nil and self.currentChar ~= "" or self.index <= 1 do
+        self.currentChar = string.sub(self.text, self.index, self.index)
 
-            if string.find(WHITESPACE_CHARS, self.currentChar) then
-                print("whitespace")
-            elseif string.find(DIGITS, self.currentChar) then
-                table.insert(Tokens, self:CreateNumber())
-            end
+        print(self.currentChar)
+
+        if string.find(WHITESPACE_CHARS, self.currentChar) then
+        elseif string.find(DIGITS, self.currentChar) then
+            table.insert(Tokens, self:CreateNumber())
+        else
+            return IllegalCharError.new(self.currentChar, self.position)
         end
+        
+        self:Advance()
     end
 
     return Tokens
