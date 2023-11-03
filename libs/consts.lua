@@ -11,3 +11,5 @@ DIGITS = "0123456789"
 ID_VALID_START = "_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 ID_VALID_CHARS = ID_VALID_START .. DIGITS
 WHITESPACE_CHARS = " \t\r"
+
+OPERATORS = {"+","-","=","*","/","^","(",")"}

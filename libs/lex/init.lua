@@ -40,6 +40,10 @@ function Lexer:CreateNumber()
     return tok
 end
 
+function Lexer:CreateOperator()
+    return Token.new(TokenType.TT_OPERATOR, self.currentChar)
+end
+
 function Lexer:Tokenize()
     local Tokens = {}
 
@@ -51,10 +55,12 @@ function Lexer:Tokenize()
         if string.find(WHITESPACE_CHARS, self.currentChar) then
         elseif string.find(DIGITS, self.currentChar) then
             table.insert(Tokens, self:CreateNumber())
+        elseif table.find(OPERATORS, self.currentChar) then
+            table.insert(Tokens, self:CreateOperator())
         else
             return IllegalCharError.new(self.currentChar, self.position)
         end
-        
+
         self:Advance()
     end
 

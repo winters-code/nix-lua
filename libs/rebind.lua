@@ -18,3 +18,10 @@ function table.stringify(tb)
     str = str .. "}"
     return str
 end
+
+function table.find(tb, val)
+    for k, v in pairs(tb) do
+        if v == val then return k end
+    end
+    return nil
+end
