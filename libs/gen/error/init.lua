@@ -2,7 +2,8 @@
 local Error = {
     message = "",
     data = "",
-    position = nil
+    position = nil,
+    instanceof = "error"
 }
 Error.__index = Error
 
@@ -16,7 +17,7 @@ function Error.new(message, data, position)
     return self
 end
 
-function Error:Prepare()
+function Error:GenerateStackTrace()
     return string.format("%s error at %s: %s", self.message, self.position:GetPositionString(), self.data)
 end
 

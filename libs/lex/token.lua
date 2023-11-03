@@ -1,7 +1,8 @@
 
 local Token = {
     tokenType = 0,
-    data = nil
+    data = nil,
+    instanceof = "token"
 }
 Token.__index = Token
 

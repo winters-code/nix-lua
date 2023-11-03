@@ -58,13 +58,13 @@ function Lexer:Tokenize()
         elseif table.find(OPERATORS, self.currentChar) then
             table.insert(Tokens, self:CreateOperator())
         else
-            return IllegalCharError.new(self.currentChar, self.position)
+            return {}, IllegalCharError.new(self.currentChar, self.position)
         end
 
         self:Advance()
     end
 
-    return Tokens
+    return Tokens, nil
 end
 
 return Lexer
