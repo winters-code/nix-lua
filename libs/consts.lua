@@ -6,4 +6,6 @@ consts.TokenType = {
     TT_OPERATOR = 2
 }
 
+consts.DIGITS = "1234567890"
+
 return consts

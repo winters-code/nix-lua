@@ -4,7 +4,7 @@ local Error = {
     data = "",
     position = nil
 }
-Error.__init = Error
+Error.__index = Error
 
 function Error.new(message, data, position)
     local self = setmetatable({}, Error)
@@ -17,7 +17,7 @@ function Error.new(message, data, position)
 end
 
 function Error:Prepare()
-    return tostring(self)
+    return string.format("%s error at %s: %s", self.message, self.position:GetPositionString(), self.data)
 end
 
 function Error.__tostring(t)

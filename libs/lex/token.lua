@@ -3,7 +3,7 @@ local Token = {
     tokenType = 0,
     data = nil
 }
-Token.__init = Token
+Token.__index = Token
 
 function Token.new(tokenType, data)
     local self = setmetatable({}, Token)
