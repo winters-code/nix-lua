@@ -42,16 +42,16 @@ function Lexer:Tokenize()
     local Tokens = {}
 
     for i = 1, #self.text do
-        self.index = i
-        self.currentChar = string.sub(self.text, i, i)
+        if self.index <= i then
+            self.index = i
+            self.currentChar = string.sub(self.text, i, i)
 
-        if string.find(WHITESPACE_CHARS, self.currentChar) then
-            print("whitespace")
-        elseif string.find(DIGITS, self.currentChar) then
-            table.insert(Tokens, self:CreateNumber())
+            if string.find(WHITESPACE_CHARS, self.currentChar) then
+                print("whitespace")
+            elseif string.find(DIGITS, self.currentChar) then
+                table.insert(Tokens, self:CreateNumber())
+            end
         end
-
-        i = self.index
     end
 
     return Tokens
