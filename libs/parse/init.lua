@@ -17,6 +17,7 @@ end
 function Parser:Parse()
 
     local ast = AbstractSyntaxTree.new()
+    local currentLayer = ast:GetMainLayer()
 
 end
 

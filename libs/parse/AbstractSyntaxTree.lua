@@ -18,4 +18,8 @@ function AbstractSyntaxTree:Add(Obj, Layer)
     return newLayer
 end
 
+function AbstractSyntaxTree:GetMainLayer()
+    return self.layer
+end
+
 return AbstractSyntaxTree
