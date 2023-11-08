@@ -1,4 +1,5 @@
 
+io.write("$ ")
 local Lexer = require("libs.lex").new(io.read())
 require("libs.rebind")
 local tokens, err = Lexer:Tokenize()
