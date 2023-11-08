@@ -2,7 +2,7 @@
 local Parser = {
     tokens = {}
 }
-Parter.__index = Parser
+Parser.__index = Parser
 
 local AbstractSyntaxTree = require("libs.parse.AbstractSyntaxTree")
 
@@ -18,6 +18,10 @@ function Parser:Parse()
 
     local ast = AbstractSyntaxTree.new()
     local currentLayer = ast:GetMainLayer()
+
+    for _, token in ipairs(self.tokens) do
+        print(tostring(token))
+    end
 
 end
 

@@ -6,6 +6,7 @@ local tokens, err = Lexer:Tokenize()
 if err then
     print(err:GenerateStackTrace())
 else
-    print(table.stringify(tokens))
+    local Parser = require("libs.parse").new(tokens)
+    Parser:Parse()
 end
 
