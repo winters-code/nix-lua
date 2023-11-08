@@ -41,6 +41,7 @@ function Parser:GenerateBinOp()
 end
 
 function Parser:AS()
+    return self:GenerateBinOp()
 end
 function Parser:DM()
 end
@@ -55,6 +56,7 @@ function Parser:Parse()
     while self.currentToken ~= nil do
         
         if self.currentToken.tokenType == TokenType.TT_NUMBER and self.tokens[self.currentTokenIdx + 1].tokenType == TokenType.TT_OPERATOR then
+            return self:AS(), nil
         else
             return nil, InvalidSyntaxError.new(self.currentToken)
         end
