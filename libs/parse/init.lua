@@ -35,6 +35,15 @@ function Parser:GenerateBinOp()
     return BinOp.new(left, operator, right)
 end
 
+function Parser:AS()
+end
+function Parser:DM()
+end
+function Parser:P()
+end
+function Parser:E()
+end
+
 function Parser:Parse()
 
     self:Advance()
