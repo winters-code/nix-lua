@@ -6,6 +6,9 @@ local BinOp = {
 }
 BinOp.__index = BinOp
 
+require("libs.rebind")
+require("libs.consts")
+
 function BinOp.new(left, operator, right)
     local self = setmetatable({}, BinOp)
 
@@ -21,7 +24,21 @@ function BinOp.__tostring(t)
 end
 
 function BinOp.__type()
-    return 'BinOp'
+    return 'Node'
+end
+
+function BinOp:Operate()
+    local leftValue = self.left
+    if typeof(leftValue) == 'Node' then leftValue = leftValue:Operate() end
+    local rightValue = self.right
+    if typeof(rightValue) == 'Node' then rightValue = rightValue:Operate() end
+
+    local operation = OPERATIONS[self.operator.data]
+    self[operation](self)
+end
+
+function BinOp:Add()
+    print("Add")
 end
 
 return BinOp

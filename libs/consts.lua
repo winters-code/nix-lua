@@ -17,3 +17,10 @@ KEYWORDS = {
     "let",
     "fun"
 }
+
+OPERATIONS = {
+    "+": "Add",
+    "-": "Sub",
+    "/": "Div",
+    "*": "Mul"
+}

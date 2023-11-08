@@ -27,7 +27,7 @@ function Parser:Retreat()
     self.currentToken = self.tokens[self.currentTokenIdx] or nil
 end
 
-function Parser:GenerateBinOp()
+function Parser:CreateBinOpToken()
     local left = self.currentToken
     self:Advance()
     local operator = self.currentToken
@@ -40,8 +40,20 @@ function Parser:GenerateBinOp()
     return BinOp.new(left, operator, right)
 end
 
+function Parser:GenerateBinOp()
+    self:Advance()
+    local thisfunc = nil
+
+    if table.find({"+","-"}, self.currentToken.data) then
+        thisfunc = self.AS
+    end
+
+    self:Retreat()
+    thisfunc(self)
+end
+
 function Parser:AS()
-    return self:GenerateBinOp()
+    return self:CreateBinOpToken()
 end
 function Parser:DM()
 end
@@ -56,7 +68,7 @@ function Parser:Parse()
     while self.currentToken ~= nil do
         
         if self.currentToken.tokenType == TokenType.TT_NUMBER and self.tokens[self.currentTokenIdx + 1].tokenType == TokenType.TT_OPERATOR then
-            return self:AS(), nil
+            return self:GenerateBinOp(), nil
         else
             return nil, InvalidSyntaxError.new(self.currentToken)
         end
