@@ -13,3 +13,7 @@ ID_VALID_CHARS = ID_VALID_START .. DIGITS
 WHITESPACE_CHARS = " \t\r"
 
 OPERATORS = {"+","-","=","*","/","^","(",")"}
+KEYWORDS = {
+    "let",
+    "fun"
+}
