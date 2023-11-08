@@ -1,5 +1,5 @@
 
-local IllegalCharError = require("libs.gen.error")
+local IllegalCharError = require("libs.dc.error")
 IllegalCharError.__index = IllegalCharError
 
 function IllegalCharError.new(data, position)

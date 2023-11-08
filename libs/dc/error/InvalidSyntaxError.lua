@@ -1,5 +1,5 @@
 
-local InvalidSyntaxError = require("libs.gen.error")
+local InvalidSyntaxError = require("libs.dc.error")
 InvalidSyntaxError.__index = InvalidSyntaxError
 
 function InvalidSyntaxError.new(data, position)

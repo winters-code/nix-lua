@@ -2,9 +2,9 @@
 local Lexer = {}
 Lexer.__index = Lexer
 
-local Position = require("libs.gen.position")
+local Position = require("libs.dc.position")
 local Token = require("libs.lex.token")
-local IllegalCharError = require("libs.gen.error.IllegalCharError")
+local IllegalCharError = require("libs.dc.error.IllegalCharError")
 require("libs.rebind")
 require("libs.consts")
 
