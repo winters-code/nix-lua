@@ -27,4 +27,8 @@ function Position:Advance(toNewColumn)
     end
 end
 
+function Position:Clone()
+    return Position.new(self.row, self.column)
+end
+
 return Position

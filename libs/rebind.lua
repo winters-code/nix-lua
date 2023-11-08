@@ -25,3 +25,10 @@ function table.find(tb, val)
     end
     return nil
 end
+
+typeof = function(o)
+    if o.__type ~= nil then
+        return o.__type()
+    end
+    return type(o)
+end

@@ -2,7 +2,7 @@
 local BinOp = {
     left = nil,
     right = nil,
-    operator = nil
+    operator = nil,
 }
 BinOp.__index = BinOp
 
@@ -18,6 +18,10 @@ end
 
 function BinOp.__tostring(t)
     return string.format("(%s %s %s)", tostring(t.left), tostring(t.operator), tostring(t.right))
+end
+
+function BinOp.__type()
+    return 'BinOp'
 end
 
 return BinOp

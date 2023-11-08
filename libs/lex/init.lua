@@ -28,6 +28,7 @@ end
 function Lexer:CreateNumber()
     local stringRep = self.currentChar
     local dots = 0
+    local startPos = self.position:Clone()
     while tonumber(self.currentChar) ~= nil or self.currentChar == "." do
         self:Advance()
         self.currentChar = string.sub(self.text, self.index, self.index)
@@ -36,12 +37,12 @@ function Lexer:CreateNumber()
         end
         stringRep = stringRep .. self.currentChar
     end
-    local tok = Token.new(TokenType.TT_NUMBER, tonumber(stringRep))
+    local tok = Token.new(TokenType.TT_NUMBER, tonumber(stringRep), startPos)
     return tok
 end
 
 function Lexer:CreateOperator()
-    return Token.new(TokenType.TT_OPERATOR, self.currentChar)
+    return Token.new(TokenType.TT_OPERATOR, self.currentChar, self.position:Clone())
 end
 
 function Lexer:Tokenize()

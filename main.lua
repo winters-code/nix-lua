@@ -5,9 +5,13 @@ require("libs.rebind")
 local tokens, err = Lexer:Tokenize()
 
 if err then
-    print(err:GenerateStackTrace())
-else
-    local Parser = require("libs.parse").new(tokens)
-    Parser:Parse()
+    error(err:GenerateStackTrace())
+end
+local Parser = require("libs.parse").new(tokens)
+local AST, err = Parser:Parse()
+
+if err then
+    error(err:GenerateStackTrace())
 end
 
+print(AST)

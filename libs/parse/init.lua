@@ -4,6 +4,7 @@ local Parser = {
 }
 Parser.__index = Parser
 
+local InvalidSyntaxError = require('libs.dc.error.InvalidSyntaxError')
 local BinOp = require('libs.parse.op.BinOp')
 require('libs.consts')
 
@@ -19,6 +20,10 @@ end
 
 function Parser:Advance()
     self.currentTokenIdx = self.currentTokenIdx + 1
+    self.currentToken = self.tokens[self.currentTokenIdx] or nil
+end
+function Parser:Retreat()
+    self.currentTokenIdx = self.currentTokenIdx - 1
     self.currentToken = self.tokens[self.currentTokenIdx] or nil
 end
 
@@ -49,12 +54,14 @@ function Parser:Parse()
     self:Advance()
     while self.currentToken ~= nil do
         
-        if self.currentToken.tokenType == TokenType.TT_NUMBER then
-            print(self:GenerateBinOp())
+        if self.currentToken.tokenType == TokenType.TT_NUMBER and self.tokens[self.currentTokenIdx + 1].tokenType == TokenType.TT_OPERATOR then
+        else
+            return nil, InvalidSyntaxError.new(self.currentToken)
         end
         self:Advance()
 
     end
+    return nil, nil
 end
 
 return Parser
