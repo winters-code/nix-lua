@@ -1,0 +1,7 @@
+
+use Grapics
+
+fun main() {
+    let window = new Graphics.Window(size=(300, 400))
+    window.initialize()
+}

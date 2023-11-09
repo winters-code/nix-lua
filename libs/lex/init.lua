@@ -52,8 +52,8 @@ function Lexer:Tokenize()
     while self.currentChar ~= nil and self.currentChar ~= "" or self.index <= 1 do
         self.currentChar = string.sub(self.text, self.index, self.index)
 
-        if string.find(WHITESPACE_CHARS, self.currentChar) then
-        elseif string.find(DIGITS, self.currentChar) then
+        if string.find(WHITESPACE_CHARS, self.currentChar, 1, true) then
+        elseif tonumber(self.currentChar) ~= nil then
             table.insert(Tokens, self:CreateNumber())
         elseif table.find(OPERATORS, self.currentChar) then
             table.insert(Tokens, self:CreateOperator())

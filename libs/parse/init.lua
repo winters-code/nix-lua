@@ -55,7 +55,7 @@ end
 function Parser:Factor()
     local token = self.currentToken
 
-    if token.tokenType == TokenType.TT_NUMBER then
+    if token and token.tokenType == TokenType.TT_NUMBER then
         self:Advance()
         return Number.new(token)
     end
@@ -69,6 +69,8 @@ end
 
 --// Parse the tokens
 function Parser:Parse()
+
+    print(table.stringify(self.tokens))
 
     local res = self:Expression()
     return res
