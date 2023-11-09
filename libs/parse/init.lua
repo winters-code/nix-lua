@@ -5,7 +5,8 @@ local Parser = {
 Parser.__index = Parser
 
 local InvalidSyntaxError = require('libs.dc.error.InvalidSyntaxError')
-local BinOp = require('libs.parse.op.BinOp')
+local BinOp = require('libs.parse.node.BinOp')
+local UnOp = require('libs.parse.node.UnOp')
 require('libs.consts')
 
 function Parser.new(tokens)
@@ -65,6 +66,9 @@ end
 function Parser:Parse()
 
     self:Advance()
+    local nodesUnsorted = {}
+
+    --// Collapse the tokens
     while self.currentToken ~= nil do
         
         if self.currentToken.tokenType == TokenType.TT_NUMBER and self.tokens[self.currentTokenIdx + 1].tokenType == TokenType.TT_OPERATOR then
@@ -75,6 +79,11 @@ function Parser:Parse()
         self:Advance()
 
     end
+
+    --// Collapse the nodes
+    
+
+    --// Return the AST
     return nil, nil
 end
 

@@ -1,9 +1,5 @@
 
-local BinOp = {
-    left = nil,
-    right = nil,
-    operator = nil,
-}
+local BinOp = require("libs.parse.node")
 BinOp.__index = BinOp
 
 require("libs.rebind")
@@ -21,10 +17,6 @@ end
 
 function BinOp.__tostring(t)
     return string.format("(%s %s %s)", tostring(t.left), tostring(t.operator), tostring(t.right))
-end
-
-function BinOp.__type()
-    return 'Node'
 end
 
 function BinOp:Operate()
