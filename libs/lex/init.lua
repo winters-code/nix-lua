@@ -60,7 +60,6 @@ function Lexer:Tokenize()
 
     while self.currentChar ~= nil and self.currentChar ~= "" or self.index <= 1 do
 
-        print(self.currentChar)
         if string.find(WHITESPACE_CHARS, self.currentChar, 1, true) then
             self:Advance()
         elseif tonumber(self.currentChar) ~= nil then

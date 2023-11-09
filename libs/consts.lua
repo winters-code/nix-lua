@@ -28,6 +28,6 @@ TT_OPERATOR_HASH = {
     ["-"] = TokenType.TT_SUB,
     ["*"] = TokenType.TT_MUL,
     ["/"] = TokenType.TT_DIV,
-    ["%("] = TokenType.TT_LPAREN,
-    ["%)"] = TokenType.TT_RPAREN
+    ["("] = TokenType.TT_LPAREN,
+    [")"] = TokenType.TT_RPAREN
 }

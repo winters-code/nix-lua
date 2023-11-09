@@ -74,7 +74,10 @@ function Parser:Parse()
     print(table.stringify(self.tokens))
 
     local res = self:Expression()
-    return res
+    if typeof(res) == "Error" then
+        return nil, res
+    end
+    return res, nil
 
 end
 
