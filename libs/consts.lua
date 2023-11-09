@@ -1,10 +1,13 @@
 
 TokenType = {
     TT_NUMBER     = 0,
-    TT_OPERATOR   = 1,
-    TT_STRING     = 2,
-    TT_KEYWORD    = 3,
-    TT_IDENTIFIER = 4
+    TT_STRING     = 1,
+    TT_KEYWORD    = 2,
+    TT_IDENTIFIER = 3,
+    TT_ADD        = 100,
+    TT_DIV        = 101,
+    TT_MUL        = 102,
+    TT_SUB        = 103
 }
 
 DIGITS = "0123456789"
@@ -18,9 +21,9 @@ KEYWORDS = {
     "fun"
 }
 
-OPERATIONS = {
-    "+": "Add",
-    "-": "Sub",
-    "/": "Div",
-    "*": "Mul"
+TT_OPERATOR_HASH = {
+    ["+"] = TokenType.TT_ADD,
+    ["-"] = TokenType.TT_SUB,
+    ["*"] = TokenType.TT_MUL,
+    ["/"] = TokenType.TT_DIV
 }

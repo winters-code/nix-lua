@@ -13,7 +13,7 @@ function UnOp.new(operator, right)
 end
 
 function UnOp.__tostring(t)
-    return string.format("(op: %s, right: %s)", self.operator, self.right)
+    return string.format("(UnOpNode(op: %s, right: %s))", self.operator, self.right)
 end
 
 function UnOp:Operate()

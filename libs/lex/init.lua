@@ -30,7 +30,7 @@ function Lexer:CreateNumber()
     local dots = 0
     local startPos = self.position:Clone()
     while tonumber(self.currentChar) ~= nil or self.currentChar == "." do
-        self:Advance()
+        self:Advance()  
         self.currentChar = string.sub(self.text, self.index, self.index)
         if self.currentChar == "." then
             dots = dots + 1
@@ -42,7 +42,8 @@ function Lexer:CreateNumber()
 end
 
 function Lexer:CreateOperator()
-    return Token.new(TokenType.TT_OPERATOR, self.currentChar, self.position:Clone())
+    local tokenType = TT_OPERATOR_HASH[self.currentChar]
+    return Token.new(tokenType, nil, self.position:Clone())
 end
 
 function Lexer:Tokenize()

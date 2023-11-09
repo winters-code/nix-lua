@@ -9,7 +9,9 @@ Parser.__index = Parser
 local InvalidSyntaxError = require('libs.dc.error.InvalidSyntaxError')
 local BinOp = require('libs.parse.node.BinOp')
 local UnOp = require('libs.parse.node.UnOp')
+local Number = require('libs.parse.node.Number')
 require('libs.consts')
+require('libs.rebind')
 
 --// Create a new parser instance
 function Parser.new(tokens)
@@ -18,6 +20,8 @@ function Parser.new(tokens)
     self.tokens = tokens
     self.currentTokenIdx = 0
     self.currentToken = nil
+
+    self:Advance()
 
     return self
 end
@@ -33,66 +37,44 @@ function Parser:Retreat()
 end
 
 --// Create a BinOp token
-function Parser:CreateBinOpToken()
-    local left = self.currentToken
-    self:Advance()
-    local operator = self.currentToken
-    self:Advance()
-    local right = self.currentToken
+function Parser:GenerateBinOp(func, operators)
+    local left = self[func](self)
 
-    if left == nil or operator == nil or right == nil then
-        return
-    end
-    return BinOp.new(left, operator, right)
-end
-
---// Generate a binary operator
-function Parser:GenerateBinOp()
-    self:Advance()
-    local thisfunc = nil
-
-    if table.find({"+","-"}, self.currentToken.data) then
-        thisfunc = self.AS
+    while self.currentToken and table.find(operators, self.currentToken.tokenType) do
+        print("aaa")
+        local operator = self.currentToken
+        self:Advance()
+        local right = self[func](self)
+        self:Advance()
+        left = BinOp.new(left, operator, right)
     end
 
-    self:Retreat()
-    thisfunc(self)
+    return left
 end
 
 --// Order of operations
-function Parser:AS()
-    return self:CreateBinOpToken()
+function Parser:Factor()
+    local token = self.currentToken
+
+    if token.tokenType == TokenType.TT_NUMBER then
+        self:Advance()
+        return Number.new(token)
+    end
 end
-function Parser:DM()
+function Parser:Term()
+    return self:GenerateBinOp("Factor", {TokenType.TT_MUL, TokenType.TT_DIV})
 end
-function Parser:P()
-end
-function Parser:E()
+function Parser:Expression()
+    return self:GenerateBinOp("Term", {TokenType.TT_ADD, TokenType.TT_SUB})
 end
 
 --// Parse the tokens
 function Parser:Parse()
 
-    self:Advance()
-    local nodesUnsorted = {}
+    print(table.stringify(self.tokens))
+    local res = self:Expression()
+    return res
 
-    --// Collapse the tokens
-    while self.currentToken ~= nil do
-        
-        if self.currentToken.tokenType == TokenType.TT_NUMBER and self.tokens[self.currentTokenIdx + 1].tokenType == TokenType.TT_OPERATOR then
-            return self:GenerateBinOp(), nil
-        else
-            return nil, InvalidSyntaxError.new(self.currentToken)
-        end
-        self:Advance()
-
-    end
-
-    --// Collapse the nodes
-    
-
-    --// Return the AST
-    return nil, nil
 end
 
 --// Return the module

@@ -9,7 +9,7 @@ function Node.new()
 end
 
 function Node.__tostring(t)
-    return string.format("(Undefined Node)")
+    return string.format("(Undefined Node())")
 end
 
 function Node.__type()

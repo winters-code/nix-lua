@@ -16,7 +16,7 @@ function BinOp.new(left, operator, right)
 end
 
 function BinOp.__tostring(t)
-    return string.format("(%s %s %s)", tostring(t.left), tostring(t.operator), tostring(t.right))
+    return string.format("(BinOpNode(%s %s %s))", tostring(t.left), tostring(t.operator), tostring(t.right))
 end
 
 function BinOp:Operate()
