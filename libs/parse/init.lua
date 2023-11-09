@@ -1,14 +1,17 @@
 
+--// Create the base Parser class
 local Parser = {
     tokens = {}
 }
 Parser.__index = Parser
 
+--// Get the modules for the parser
 local InvalidSyntaxError = require('libs.dc.error.InvalidSyntaxError')
 local BinOp = require('libs.parse.node.BinOp')
 local UnOp = require('libs.parse.node.UnOp')
 require('libs.consts')
 
+--// Create a new parser instance
 function Parser.new(tokens)
     local self = setmetatable({}, Parser)
 
@@ -19,6 +22,7 @@ function Parser.new(tokens)
     return self
 end
 
+--// Movement between the tokens in the parser
 function Parser:Advance()
     self.currentTokenIdx = self.currentTokenIdx + 1
     self.currentToken = self.tokens[self.currentTokenIdx] or nil
@@ -28,6 +32,7 @@ function Parser:Retreat()
     self.currentToken = self.tokens[self.currentTokenIdx] or nil
 end
 
+--// Create a BinOp token
 function Parser:CreateBinOpToken()
     local left = self.currentToken
     self:Advance()
@@ -41,6 +46,7 @@ function Parser:CreateBinOpToken()
     return BinOp.new(left, operator, right)
 end
 
+--// Generate a binary operator
 function Parser:GenerateBinOp()
     self:Advance()
     local thisfunc = nil
@@ -53,6 +59,7 @@ function Parser:GenerateBinOp()
     thisfunc(self)
 end
 
+--// Order of operations
 function Parser:AS()
     return self:CreateBinOpToken()
 end
@@ -63,6 +70,7 @@ end
 function Parser:E()
 end
 
+--// Parse the tokens
 function Parser:Parse()
 
     self:Advance()
@@ -87,4 +95,5 @@ function Parser:Parse()
     return nil, nil
 end
 
+--// Return the module
 return Parser

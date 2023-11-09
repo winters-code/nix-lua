@@ -1,4 +1,5 @@
 
+--// Split a string by characters
 function string.split(inputstr, sep)
     if sep == nil then
         sep = "%s"
@@ -10,6 +11,7 @@ function string.split(inputstr, sep)
     return t
 end
 
+--// Turn a table into a nicely formatted string
 function table.stringify(tb)
     local str = "{\n"
     for k, v in pairs(tb) do
@@ -19,6 +21,7 @@ function table.stringify(tb)
     return str
 end
 
+--// Find a value in a table
 function table.find(tb, val)
     for k, v in pairs(tb) do
         if v == val then return k end
@@ -26,6 +29,7 @@ function table.find(tb, val)
     return nil
 end
 
+--// Get the class type
 typeof = function(o)
     if o.__type ~= nil then
         return o.__type()
