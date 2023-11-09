@@ -12,8 +12,8 @@ TokenType = {
     TT_RPAREN     = 201
 }
 
-DIGITS = {"0","1","2","3","4","5","6","7","8","9"}
-DIGITS_DOT = {"0","1","2","3","4","5","6","7","8","9","."}
+DIGITS = "0123456789"
+DIGITS_DOT = DIGITS .. "."
 ID_VALID_START = "_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 WHITESPACE_CHARS = " \t\r\n"
 
