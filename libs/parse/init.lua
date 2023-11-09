@@ -46,6 +46,7 @@ function Parser:GenerateBinOp(func, operators)
         local right = self[func](self)
         self:Advance()
         left = BinOp.new(left, operator, right)
+        self:Advance()
     end
 
     return left

@@ -26,6 +26,9 @@ function Position:Advance(toNewColumn)
         self.row = self.row + 1
     end
 end
+function Position:Retreat(toNewColumn)
+    self.row = self.row - 1
+end
 
 function Position:Clone()
     return Position.new(self.row, self.column)
