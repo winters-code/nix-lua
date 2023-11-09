@@ -41,7 +41,6 @@ function Parser:GenerateBinOp(func, operators)
     local left = self[func](self)
 
     while self.currentToken and table.find(operators, self.currentToken.tokenType) do
-        print("aaa")
         local operator = self.currentToken
         self:Advance()
         local right = self[func](self)
@@ -71,7 +70,6 @@ end
 --// Parse the tokens
 function Parser:Parse()
 
-    print(table.stringify(self.tokens))
     local res = self:Expression()
     return res
 
