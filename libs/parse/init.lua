@@ -31,22 +31,17 @@ function Parser:Advance()
     self.currentTokenIdx = self.currentTokenIdx + 1
     self.currentToken = self.tokens[self.currentTokenIdx] or nil
 end
-function Parser:Retreat()
-    self.currentTokenIdx = self.currentTokenIdx - 1
-    self.currentToken = self.tokens[self.currentTokenIdx] or nil
-end
 
 --// Create a BinOp token
 function Parser:GenerateBinOp(func, operators)
     local left = self[func](self)
 
-    while self.currentToken and table.find(operators, self.currentToken.tokenType) do
+    while self.currentToken ~= nil and table.find(operators, self.currentToken.tokenType) do
         local operator = self.currentToken
         self:Advance()
         local right = self[func](self)
         self:Advance()
         left = BinOp.new(left, operator, right)
-        self:Advance()
     end
 
     return left
@@ -61,11 +56,8 @@ function Parser:Factor()
         return Number.new(token)
     end
 end
-function Parser:Atom()
-    return self:GenerateBinOp("Factor", {TokenType.TT_LPAREN, TokenType.TT_RPAREN})
-end
 function Parser:Term()
-    return self:GenerateBinOp("Atom", {TokenType.TT_MUL, TokenType.TT_DIV})
+    return self:GenerateBinOp("Factor", {TokenType.TT_MUL, TokenType.TT_DIV})
 end
 function Parser:Expression()
     return self:GenerateBinOp("Term", {TokenType.TT_ADD, TokenType.TT_SUB})

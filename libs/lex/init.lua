@@ -26,11 +26,6 @@ function Lexer:Advance()
     self.index = self.index + 1
     self.currentChar = string.sub(self.text, self.index, self.index)
 end
-function Lexer:Retreat()
-    self.position:Retreat()
-    self.index = self.index - 1
-    self.currentChar = string.sub(self.text, self.index, self.index)
-end
 
 function Lexer:CreateNumber()
     local stringRep = self.currentChar
