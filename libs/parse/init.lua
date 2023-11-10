@@ -61,8 +61,11 @@ function Parser:Factor()
         return Number.new(token)
     end
 end
+function Parser:Atom()
+    return self:GenerateBinOp("Factor", {TokenType.TT_LPAREN, TokenType.TT_RPAREN})
+end
 function Parser:Term()
-    return self:GenerateBinOp("Factor", {TokenType.TT_MUL, TokenType.TT_DIV})
+    return self:GenerateBinOp("Atom", {TokenType.TT_MUL, TokenType.TT_DIV})
 end
 function Parser:Expression()
     return self:GenerateBinOp("Term", {TokenType.TT_ADD, TokenType.TT_SUB})
