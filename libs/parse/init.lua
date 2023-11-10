@@ -40,7 +40,6 @@ function Parser:GenerateBinOp(func, operators)
         local operator = self.currentToken
         self:Advance()
         local right = self[func](self)
-        self:Advance()
         left = BinOp.new(left, operator, right)
     end
 
@@ -65,8 +64,6 @@ end
 
 --// Parse the tokens
 function Parser:Parse()
-
-    print(table.stringify(self.tokens))
 
     local res = self:Expression()
     if typeof(res) == "Error" then
