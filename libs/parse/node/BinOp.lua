@@ -54,7 +54,10 @@ function BinOp:Operate()
     end
 
     return Result.new(res, nil)
-
+end
+function BinOp:SetPosition(pos)
+    self.position = pos
+    return self
 end
 
 function BinOp:Add(a, b)
@@ -68,7 +71,7 @@ function BinOp:Mul(a, b)
 end
 function BinOp:Div(a, b)
     if b == 0 then
-        return InvalidOperationError.new("Division by zero")
+        return InvalidOperationError.new("Division by zero", self.position)
     end
     return a / b
 end

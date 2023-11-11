@@ -40,7 +40,7 @@ function Parser:GenerateBinOp(func, operators)
         local operator = self.currentToken
         self:Advance()
         local right = self[func](self)
-        left = BinOp.new(left, operator, right)
+        left = BinOp.new(left, operator, right):SetPosition(operator.position)
     end
 
     return left
@@ -52,7 +52,7 @@ function Parser:Factor()
 
     if token and token.tokenType == TokenType.TT_NUMBER then
         self:Advance()
-        return Number.new(token)
+        return Number.new(token):SetPosition(token.position)
     end
 end
 function Parser:Term()
