@@ -55,8 +55,21 @@ function Parser:Factor()
         return Number.new(token):SetPosition(token.position)
     end
 end
+function Parser:Paren()
+    if self.currentToken.tokenType == TokenType.TT_LPAREN then
+        self:Advance()
+        local res = self:GenerateBinOp("Expression", {TokenType.TT_ADD, TokenType.TT_SUB})
+        self:Advance()
+        return res
+    else
+        return self:Factor()
+    end
+end
+function Parser:Atom()
+    return self:GenerateBinOp("Paren", {TokenType.TT_POW})
+end
 function Parser:Term()
-    return self:GenerateBinOp("Factor", {TokenType.TT_MUL, TokenType.TT_DIV})
+    return self:GenerateBinOp("Atom", {TokenType.TT_MUL, TokenType.TT_DIV})
 end
 function Parser:Expression()
     return self:GenerateBinOp("Term", {TokenType.TT_ADD, TokenType.TT_SUB})
