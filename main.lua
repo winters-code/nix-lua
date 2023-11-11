@@ -14,4 +14,5 @@ if err then
     error(err:GenerateStackTrace())
 end
 
-print(AST)
+local Interpreter = require("libs.inter").new(AST)
+Interpreter:Interpret()

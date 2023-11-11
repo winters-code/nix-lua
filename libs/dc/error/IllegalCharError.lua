@@ -1,9 +1,9 @@
 
-local IllegalCharError = require("libs.dc.error")
-IllegalCharError.__index = IllegalCharError
+local Error = require("libs.dc.error")
+Error.__index = Error
 
-function IllegalCharError.new(data, position)
-    local self = setmetatable({}, IllegalCharError)
+function Error.new(data, position)
+    local self = setmetatable({}, Error)
 
     self.message = "Illegal character"
     self.data = data
@@ -12,4 +12,4 @@ function IllegalCharError.new(data, position)
     return self
 end
 
-return IllegalCharError
+return Error

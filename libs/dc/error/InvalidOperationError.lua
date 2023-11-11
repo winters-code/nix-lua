@@ -5,9 +5,8 @@ Error.__index = Error
 function Error.new(data)
     local self = setmetatable({}, Error)
 
-    self.message = "Invalid syntax"
+    self.message = "Invalid Operation"
     self.data = data
-    self.position = data.position
 
     return self
 end
