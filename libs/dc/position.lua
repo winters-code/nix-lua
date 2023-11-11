@@ -18,16 +18,13 @@ end
 function Position:GetPositionString()
     return string.format("row %d, column %d", self.row, self.column)
 end
-function Position:Advance(toNewColumn)
-    if toNewColumn then
-        self.column = self.column + 1
-        self.row = 0
-    else
+function Position:Advance(toNewRow)
+    if toNewRow then
         self.row = self.row + 1
+        self.column = 0
+    else
+        self.column = self.column + 1
     end
-end
-function Position:Retreat(toNewColumn)
-    self.row = self.row - 1
 end
 
 function Position:Clone()
