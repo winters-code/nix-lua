@@ -2,17 +2,18 @@
 local Interpreter = {}
 Interpreter.__index = Interpreter
 
-function Interpreter.new(ast)
+function Interpreter.new(ast, globalScope)
     local self = setmetatable({}, Interpreter)
 
     self.ast = ast
+    self.globalScope = globalScope
 
     return self
 end
 
 function Interpreter:Interpret()
 
-    print(self.ast:Operate())
+    return self.ast:Operate(self.globalScope)
 
 end
 

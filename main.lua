@@ -1,23 +1,29 @@
 
 local shell = arg[1] == nil
 
+local L = require("libs.lex")
+local P = require("libs.parse")
+local I = require("libs.inter")
+
+local s_G = require("libs.scope").new()
+
 local function run(code)
     if code == "q" then return -1 end
 
-    local Lexer = require("libs.lex").new(code)
+    local Lexer = L.new(code)
     local tokens, err = Lexer:Tokenize()
 
     if err then
         print(err:GenerateStackTrace())
     else
-        local Parser = require("libs.parse").new(tokens)
+        local Parser = P.new(tokens)
         local AST, err = Parser:Parse()
 
         if err then
             print(err:GenerateStackTrace())
         else
 
-            local Interpreter = require("libs.inter").new(AST)
+            local Interpreter = I.new(AST, s_G)
             Interpreter:Interpret()
         end
     end
