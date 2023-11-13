@@ -2,11 +2,11 @@
 local Error = require("libs.dc.error")
 Error.__index = Error
 
-function Error.new(data)
+function Error.new(message, data)
     local self = setmetatable({}, Error)
 
     self.message = "Invalid syntax"
-    self.data = data
+    self.data = message
     self.position = data.position
 
     return self

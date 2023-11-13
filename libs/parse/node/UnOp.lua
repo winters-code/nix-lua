@@ -19,4 +19,8 @@ end
 function UnOp:Operate()
 end
 
+function UnOp:SetError(err)
+    self.error = err
+end
+
 return UnOp

@@ -20,6 +20,7 @@ function Parser.new(tokens)
     self.tokens = tokens
     self.currentTokenIdx = 0
     self.currentToken = nil
+    self.lastToken = nil
 
     self:Advance()
 
@@ -28,6 +29,7 @@ end
 
 --// Movement between the tokens in the parser
 function Parser:Advance()
+    self.lastToken = self.currentToken
     self.currentTokenIdx = self.currentTokenIdx + 1
     self.currentToken = self.tokens[self.currentTokenIdx] or nil
 end
@@ -54,9 +56,13 @@ function Parser:Factor()
         self:Advance()
         return Number.new(token):SetPosition(token.position)
     end
+
+    return Number.new(token):SetError(InvalidSyntexError.new("Missing value in expression", self.lastToken))
 end
 function Parser:Paren()
-    if self.currentToken.tokenType == TokenType.TT_LPAREN then
+    if not self.currentToken then
+        return Number.new(self.currentToken):SetError(InvalidSyntaxError.new("Missing value in expresion", self.lastToken))
+    elseif self.currentToken.tokenType == TokenType.TT_LPAREN then
         self:Advance()
         local res = self:GenerateBinOp("Expression", {TokenType.TT_ADD, TokenType.TT_SUB})
         self:Advance()

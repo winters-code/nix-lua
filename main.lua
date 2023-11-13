@@ -8,17 +8,19 @@ local function run(code)
     local tokens, err = Lexer:Tokenize()
 
     if err then
-        error(err:GenerateStackTrace())
-    end
-    local Parser = require("libs.parse").new(tokens)
-    local AST, err = Parser:Parse()
+        print(err:GenerateStackTrace())
+    else
+        local Parser = require("libs.parse").new(tokens)
+        local AST, err = Parser:Parse()
 
-    if err then
-        error(err:GenerateStackTrace())
-    end
+        if err then
+            print(err:GenerateStackTrace())
+        else
 
-    local Interpreter = require("libs.inter").new(AST)
-    Interpreter:Interpret()
+            local Interpreter = require("libs.inter").new(AST)
+            Interpreter:Interpret()
+        end
+    end
 end
 
 if shell then
