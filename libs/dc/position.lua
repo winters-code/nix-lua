@@ -16,7 +16,7 @@ function Position.__tostring(tbl)
 end
 
 function Position:GetPositionString()
-    return string.format("row %d, column %d", self.row, self.column)
+    return string.format("row %d, column %d", self.row, self.column - 1)
 end
 function Position:Advance(toNewRow)
     if toNewRow then
