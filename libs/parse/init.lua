@@ -57,7 +57,7 @@ function Parser:Factor()
         return Number.new(token):SetPosition(token.position)
     end
 
-    return Number.new(token):SetError(InvalidSyntexError.new("Missing value in expression", self.lastToken))
+    return Number.new(token):SetError(InvalidSyntaxError.new("Missing value in expression", self.lastToken))
 end
 function Parser:Paren()
     if not self.currentToken then

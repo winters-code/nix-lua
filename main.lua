@@ -24,7 +24,8 @@ local function run(code)
         else
 
             local Interpreter = I.new(AST, s_G)
-            Interpreter:Interpret()
+            local res = Interpreter:Interpret()
+            print(res)
         end
     end
 end

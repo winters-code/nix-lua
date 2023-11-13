@@ -4,6 +4,7 @@ BinOp.__index = BinOp
 
 local Result = require('libs.inter.res')
 local InvalidOperationError = require('libs.dc.error.InvalidOperationError')
+local InvalidSyntaxError = require('libs.dc.error.InvalidSyntaxError')
 
 require("libs.rebind")
 require("libs.consts")
@@ -23,6 +24,14 @@ function BinOp.__tostring(t)
 end
 
 function BinOp:Operate()
+
+    if not self.right then
+        print(self.operator)
+        return Result.new(nil, InvalidSyntaxError.new("Missing term on the right of the operation", self.operator))
+    elseif not self.left then
+        print(self.operator)
+        return Result.new(nil, InvalidSyntaxError.new("Missing term on the left of the operation", self.operator))
+    end
     
     local leftValue = self.left:Operate()
     local rightValue = self.right:Operate()
