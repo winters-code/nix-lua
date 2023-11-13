@@ -16,6 +16,7 @@ TokenType = {
 DIGITS = "0123456789"
 DIGITS_DOT = DIGITS .. "."
 ID_VALID_START = "_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+ID_VALID_DURING = "_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 WHITESPACE_CHARS = " \t\r\n"
 
 OPERATORS = {"+","-","=","*","/","^","(",")"}

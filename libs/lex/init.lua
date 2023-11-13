@@ -50,6 +50,20 @@ function Lexer:CreateOperator()
     return Token.new(tokenType, nil, self.position:Clone())
 end
 
+function Lexer:CreateKeywordOrID()
+    local data = self.currentChar
+
+    self:Advance()
+    while string.find(ID_VALID_DURING, self.currentChar) do
+        data = data .. self.currentChar
+        self:Advance()
+    end
+
+    local tt = TokenType.TT_IDENTIFIER
+    if table.find(KEYWORDS, data) then tt = TokenType.TT_KEYWORD end
+    return Token.new(tt, data, self.position:Clone())
+end
+
 function Lexer:Tokenize()
     local Tokens = {}
 
@@ -61,6 +75,8 @@ function Lexer:Tokenize()
             table.insert(Tokens, self:CreateNumber())
         elseif table.find(OPERATORS, self.currentChar) then
             table.insert(Tokens, self:CreateOperator())
+        elseif string.find(ID_VALID_START, self.currentChar) then
+            table.insert(Tokens, self:CreateKeywordOrID())
         else
             return {}, IllegalCharError.new(self.currentChar, self.position)
         end
