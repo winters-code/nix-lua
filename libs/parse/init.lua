@@ -57,18 +57,19 @@ function Parser:Factor()
         return Number.new(token):SetPosition(token.position)
     end
 
-    return Number.new(token):SetError(InvalidSyntaxError.new("Missing value in expression", self.lastToken))
+    return Number.new(token):SetError(InvalidSyntaxError.new("Missing value in expression", self.lastToken.position))
 end
 function Parser:Paren()
     if not self.currentToken then
-        return Number.new(self.currentToken):SetError(InvalidSyntaxError.new("Missing value in expresion", self.lastToken))
+        return Number.new(self.currentToken):SetError(InvalidSyntaxError.new("Missing value in expresion", self.lastToken.position))
     elseif self.currentToken.tokenType == TokenType.TT_LPAREN then
         self:Advance()
-        local res = self:GenerateBinOp("Expression", {TokenType.TT_ADD, TokenType.TT_SUB})
-        self:Advance()
+        local res = self:Expression()
         if self.currentToken == nil or self.currentToken.tokenType ~= TokenType.TT_RPAREN then
-            res:SetError(InvalidSyntaxError.new("Missing right parenthesis", self.lastToken))
+            local pos = self.currentToken or self.lastToken
+            res:SetError(InvalidSyntaxError.new("Missing right parenthesis", pos.position))
         end
+        self:Advance()
         return res
     else
         return self:Factor()
@@ -88,8 +89,8 @@ end
 function Parser:Parse()
 
     local res = self:Expression()
-    if typeof(res) == "Error" then
-        return nil, res
+    if res.error then
+        return nil, res.error
     end
     return res, nil
 
