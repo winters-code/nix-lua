@@ -13,10 +13,6 @@ function Number.new(val)
     return self
 end
 
-function Number:SetError(err)
-    self.error = err
-end
-
 function Number:Operate()
     return Result.new(tonumber(self.value.data), nil)
 end

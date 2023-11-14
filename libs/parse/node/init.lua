@@ -12,6 +12,10 @@ function Node.__tostring(t)
     return string.format("(Undefined Node())")
 end
 
+function Node:SetError(err)
+    self.error = err
+end
+
 function Node.__type()
     return 'Node'
 end

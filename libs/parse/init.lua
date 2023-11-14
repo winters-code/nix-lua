@@ -66,6 +66,9 @@ function Parser:Paren()
         self:Advance()
         local res = self:GenerateBinOp("Expression", {TokenType.TT_ADD, TokenType.TT_SUB})
         self:Advance()
+        if self.currentToken == nil or self.currentToken.tokenType ~= TokenType.TT_RPAREN then
+            res:SetError(InvalidSyntaxError.new("Missing right parenthesis", self.lastToken))
+        end
         return res
     else
         return self:Factor()
