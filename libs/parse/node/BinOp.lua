@@ -25,12 +25,12 @@ end
 
 function BinOp:Operate()
 
-    if not self.right then
-        print(self.operator)
-        return Result.new(nil, InvalidSyntaxError.new("Missing term on the right of the operation", self.operator))
+    if not self.right and not self.left then
+        return Result.new(nil, InvalidSyntaxError.new("Standalone operator found", self.position))
+    elseif not self.right then
+        return Result.new(nil, InvalidSyntaxError.new("Missing term on the right of the operation", self.position))
     elseif not self.left then
-        print(self.operator)
-        return Result.new(nil, InvalidSyntaxError.new("Missing term on the left of the operation", self.operator))
+        return Result.new(nil, InvalidSyntaxError.new("Missing term on the left of the operation", self.position))
     end
     
     local leftValue = self.left:Operate()
