@@ -1,6 +1,5 @@
 
-local Number = {
-}
+local Number = require('libs.dc.error')
 Number.__index = Number
 
 local Result = require('libs.inter.res')

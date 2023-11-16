@@ -46,6 +46,9 @@ function Parser:GenerateBinOp(func, operators)
         local right = self[func](self)
         left = BinOp.new(left, operator, right):SetPosition(operator.position)
     end
+    if (self.currentToken or self.lastToken).tokenType == TokenType.TT_RPAREN then
+        self.parenScope:SubParen()
+    end
 
     return left
 end
