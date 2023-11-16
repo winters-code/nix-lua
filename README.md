@@ -41,3 +41,6 @@ fun main() {
     let val y = 10 // y will be passed by value
 }
 ```
+
+# Credits
+ - [winterscode](http://www.winterscode.io/): Programming
