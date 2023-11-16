@@ -41,7 +41,6 @@ function Parser:GenerateBinOp(func, operators)
     local left = self[func](self)
 
     while self.currentToken ~= nil and table.find(operators, self.currentToken.tokenType) do
-        print(self.currentToken)
         local operator = self.currentToken
         self:Advance()
         local right = self[func](self)
@@ -57,8 +56,6 @@ end
 --// Order of operations
 function Parser:Factor()
     local token = self.currentToken
-
-    print(token)
 
     if token and token.tokenType == TokenType.TT_NUMBER then
         self:Advance()
@@ -95,12 +92,10 @@ function Parser:Parse()
 
     local res = self:Expression()
 
-    if not self.parenScope:Check() then
-        if self.parenScope.parentheses > 0 then
-            res:SetError(InvalidSyntaxError.new("Missing ending parenthesis", self.lastToken.position))
-        else
-            res:SetError(InvalidSyntaxError.new("Missing starting parenthesis", self.lastToken.position))
-        end
+    if self.parenScope.parentheses > 0 then
+        res:SetError(InvalidSyntaxError.new("Missing ending parenthesis", self.lastToken.position))
+    elseif self.parenScope.parentheses > 0 then
+        res:SetError(InvalidSyntaxError.new("Missing starting parenthesis", self.lastToken.position))
     end
 
     if res.error then

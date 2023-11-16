@@ -18,7 +18,7 @@ function ParenScope:SubParen()
 end
 
 function ParenScope:Check()
-    return self.parentheses == 0
+    return self.parentheses / math.abs(self.parentheses)
 end
 
 return ParenScope
