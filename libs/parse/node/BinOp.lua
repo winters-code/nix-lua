@@ -15,6 +15,7 @@ function BinOp.new(left, operator, right)
     self.left = left
     self.operator = operator
     self.right = right
+    print(self .. 'test')
 
     return self
 end
@@ -88,6 +89,10 @@ function BinOp:Div(a, b)
 end
 function BinOp:Pow(a, b)
     return math.pow(a, b)
+end
+function BinOp:SetPosition(pos)
+    self.position = pos
+    return self
 end
 
 return BinOp
