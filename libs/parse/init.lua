@@ -41,6 +41,7 @@ function Parser:GenerateBinOp(func, operators)
     local left = self[func](self)
 
     while self.currentToken ~= nil and table.find(operators, self.currentToken.tokenType) do
+        print(self.currentToken)
         local operator = self.currentToken
         self:Advance()
         local right = self[func](self)
@@ -56,6 +57,8 @@ end
 --// Order of operations
 function Parser:Factor()
     local token = self.currentToken
+
+    print(token)
 
     if token and token.tokenType == TokenType.TT_NUMBER then
         self:Advance()

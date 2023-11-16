@@ -54,7 +54,7 @@ function Lexer:CreateKeywordOrID()
     local data = self.currentChar
 
     self:Advance()
-    while string.find(ID_VALID_DURING, self.currentChar) do
+    while string.find(ID_VALID_DURING, self.currentChar) and self.currentChar ~= "" do
         data = data .. self.currentChar
         self:Advance()
     end

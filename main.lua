@@ -4,6 +4,7 @@ local shell = arg[1] == nil
 local L = require("libs.lex")
 local P = require("libs.parse")
 local I = require("libs.inter")
+require('libs.rebind')
 
 local s_G = require("libs.scope").new()
 
@@ -22,7 +23,7 @@ local function run(code)
         if err then
             print(err:GenerateStackTrace())
         else
-
+            print(AST)
             local Interpreter = I.new(AST, s_G)
             local res = Interpreter:Interpret()
             print(res)
