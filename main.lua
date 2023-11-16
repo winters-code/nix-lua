@@ -23,7 +23,7 @@ local function run(code)
         if err then
             print(err:GenerateStackTrace())
         else
-            print(AST)
+            -- print(AST)
             local Interpreter = I.new(AST, s_G)
             local res = Interpreter:Interpret()
             print(res)
