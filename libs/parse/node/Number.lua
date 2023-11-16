@@ -1,5 +1,5 @@
 
-local Number = require('libs.dc.error')
+local Number = require('libs.parse.node')
 Number.__index = Number
 
 local Result = require('libs.inter.res')

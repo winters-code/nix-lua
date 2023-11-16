@@ -90,8 +90,4 @@ function BinOp:Pow(a, b)
     return math.pow(a, b)
 end
 
-function BinOp:SetError(err)
-    self.error = err
-end
-
 return BinOp

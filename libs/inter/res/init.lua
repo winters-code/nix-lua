@@ -15,7 +15,7 @@ function InterpreterResult.__tostring(t)
     if t.error then
         return t.error:GenerateStackTrace()
     end
-    return t.value
+    return tostring(t.value)
 end
 
 function InterpreterResult.__type()
