@@ -10,6 +10,7 @@ local InvalidSyntaxError = require('libs.dc.error.InvalidSyntaxError')
 local BinOp = require('libs.parse.node.BinOp')
 local UnOp = require('libs.parse.node.UnOp')
 local Number = require('libs.parse.node.Number')
+local ParenScope = require('libs.scope.paren')
 require('libs.consts')
 require('libs.rebind')
 
@@ -21,6 +22,7 @@ function Parser.new(tokens)
     self.currentTokenIdx = 0
     self.currentToken = nil
     self.lastToken = nil
+    self.parenScope = ParenScope.new()
 
     self:Advance()
 
@@ -29,7 +31,7 @@ end
 
 --// Movement between the tokens in the parser
 function Parser:Advance()
-    self.lastToken = self.currentToken
+    self.lastToken = self.currentToken or self.lastToken
     self.currentTokenIdx = self.currentTokenIdx + 1
     self.currentToken = self.tokens[self.currentTokenIdx] or nil
 end
@@ -65,10 +67,7 @@ function Parser:Paren()
     elseif self.currentToken.tokenType == TokenType.TT_LPAREN then
         self:Advance()
         local res = self:Expression()
-        if self.currentToken == nil or self.currentToken.tokenType ~= TokenType.TT_RPAREN then
-            local pos = self.currentToken or self.lastToken
-            res:SetError(InvalidSyntaxError.new("Missing right parenthesis", pos.position))
-        end
+        self.parenScope:AddParen()
         self:Advance()
         return res
     else
@@ -89,6 +88,15 @@ end
 function Parser:Parse()
 
     local res = self:Expression()
+
+    if not self.parenScope:Check() then
+        if self.parenScope.parentheses > 0 then
+            res:SetError(InvalidSyntaxError.new("Missing ending parenthesis", self.lastToken.position))
+        else
+            res:SetError(InvalidSyntaxError.new("Missing starting parenthesis", self.lastToken.position))
+        end
+    end
+
     if res.error then
         return nil, res.error
     end
