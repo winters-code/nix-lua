@@ -61,7 +61,6 @@ function Parser:Factor()
     if token and token.tokenType == TokenType.TT_NUMBER then
         self:Advance()
         local num = Number.new(token):SetPosition(token.position)
-        print(num)
         return num
     end
 
@@ -69,7 +68,7 @@ function Parser:Factor()
 end
 function Parser:Paren()
     if not self.currentToken then
-        return Number.new(self.currentToken):SetError(InvalidSyntaxError.new("Missing value in expresion", self.lastToken.position))
+        return Number.new(self.lastToken):SetError(InvalidSyntaxError.new("Missing value in expresion", self.lastToken.position))
     elseif self.currentToken.tokenType == TokenType.TT_LPAREN then
         self:Advance()
         local res = self:Expression()
