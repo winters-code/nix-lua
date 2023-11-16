@@ -21,7 +21,7 @@ function Number:SetPosition(pos)
 end
 
 function Number.__tostring(t)
-    return string.format("(NumberNode(val: %s))", t.value.data)
+    return string.format("(NumberNode(val: %s, err: %s))", t.value.data, t.error)
 end
 
 return Number
