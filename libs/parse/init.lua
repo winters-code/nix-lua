@@ -45,10 +45,9 @@ function Parser:GenerateBinOp(func, operators)
         local operator = self.currentToken
         self:Advance()
         local right = self[func](self)
+        print(left, operator, right)
         op = BinOp.new(left, operator, right)
-        print(op)
         op:SetPosition(operator.position)
-        print(op)
     end
     if (self.currentToken or self.lastToken).tokenType == TokenType.TT_RPAREN then
         self.parenScope:SubParen()
@@ -58,7 +57,7 @@ function Parser:GenerateBinOp(func, operators)
 end
 
 --// Order of operations
-function Parser:Factor()
+function Parser:Factor() 
     local token = self.currentToken
 
     if token and token.tokenType == TokenType.TT_NUMBER then
@@ -66,7 +65,7 @@ function Parser:Factor()
         local num = Number.new(token):SetPosition(token.position)
         return num
     end
-    
+
     return Number.new(token):SetError(InvalidSyntaxError.new("Missing value in expression", self.lastToken.position))
 end
 function Parser:Paren()
