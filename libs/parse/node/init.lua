@@ -14,6 +14,7 @@ end
 
 function Node:SetError(err)
     self.error = err
+    return self
 end
 
 function Node.__type()

@@ -7,16 +7,22 @@ function Position.new(row, column)
 
     self.row = row or 0
     self.column = column or 0
+    self.file = "<stdin>"
 
     return self
 end
 
 function Position.__tostring(tbl)
-    return string.format("Position(row=%d, column=%d)", tbl.row, tbl.column)
+    return string.format("Position(file=\"%s\", row=%d, column=%d)", tbl.file, tbl.row, tbl.column)
+end
+
+function Position:SetFile(name)
+    self.file = name
+    return self
 end
 
 function Position:GetPositionString()
-    return string.format("row %d, column %d", self.row, self.column - 1)
+    return string.format("file %s, row %d, column %d", self.file, self.row, self.column - 1)
 end
 function Position:Advance(toNewRow)
     if toNewRow then

@@ -19,6 +19,10 @@ function Number:SetPosition(pos)
     self.position = pos
     return self
 end
+function Number:SetError(err)
+    self.error = err
+    return self
+end
 
 function Number.__tostring(t)
     local d = t.value

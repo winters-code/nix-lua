@@ -90,9 +90,5 @@ end
 function BinOp:Pow(a, b)
     return math.pow(a, b)
 end
-function BinOp:SetPosition(pos)
-    self.position = pos
-    return self
-end
 
 return BinOp
