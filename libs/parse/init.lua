@@ -39,6 +39,7 @@ end
 --// Create a BinOp token
 function Parser:GenerateBinOp(func, operators)
     local left = self[func](self)
+    print(func, left)
     local op = nil
 
     while self.currentToken ~= nil and table.find(operators, self.currentToken.tokenType) do
@@ -73,9 +74,8 @@ function Parser:Paren()
         return Number.new(self.lastToken):SetError(InvalidSyntaxError.new("Missing value in expresion", self.lastToken.position))
     elseif self.currentToken.tokenType == TokenType.TT_LPAREN then
         self:Advance()
-        local res = self:Expression()
         self.parenScope:AddParen()
-        self:Advance()
+        local res = self:GenerateBinOp("Term", {TokenType.TT_ADD, TokenType.TT_SUB})
         return res
     else
         return self:Factor()

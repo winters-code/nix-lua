@@ -19,8 +19,13 @@ end
 function UnOp:Operate()
 end
 
+function UnOp:SetPosition(pos)
+    self.position = pos
+    return self
+end
 function UnOp:SetError(err)
     self.error = err
+    return self
 end
 
 return UnOp

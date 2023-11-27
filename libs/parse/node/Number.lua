@@ -1,5 +1,5 @@
 
-local Number = require('libs.parse.node')
+local Number = {}
 Number.__index = Number
 
 local Result = require('libs.inter.res')

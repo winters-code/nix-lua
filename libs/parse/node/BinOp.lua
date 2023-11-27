@@ -1,5 +1,5 @@
 
-local BinOp = require("libs.parse.node")
+local BinOp = {}
 BinOp.__index = BinOp
 
 local Result = require('libs.inter.res')
@@ -15,7 +15,6 @@ function BinOp.new(left, operator, right)
     self.left = left
     self.operator = operator
     self.right = right
-    print(self .. 'test')
 
     return self
 end
@@ -69,6 +68,10 @@ function BinOp:Operate()
 end
 function BinOp:SetPosition(pos)
     self.position = pos
+    return self
+end
+function BinOp:SetError(err)
+    self.error = err
     return self
 end
 
