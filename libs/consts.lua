@@ -10,7 +10,9 @@ TokenType = {
     TT_SUB        = 103,
     TT_POW        = 104,
     TT_LPAREN     = 200,
-    TT_RPAREN     = 201
+    TT_RPAREN     = 201,
+    TT_LBRACE     = 202,
+    TT_RBRACE     = 203
 }
 
 DIGITS = "0123456789"
@@ -19,7 +21,7 @@ ID_VALID_START = "_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 ID_VALID_DURING = "_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 WHITESPACE_CHARS = " \t\r\n"
 
-OPERATORS = {"+","-","=","*","/","^","(",")"}
+OPERATORS = {"+","-","=","*","/","^","(",")", "{", "}"}
 KEYWORDS = {
     "let",
     "fun"
@@ -32,5 +34,7 @@ TT_OPERATOR_HASH = {
     ["/"] = TokenType.TT_DIV,
     ["^"] = TokenType.TT_POW,
     ["("] = TokenType.TT_LPAREN,
-    [")"] = TokenType.TT_RPAREN
+    [")"] = TokenType.TT_RPAREN,
+    ["{"] = TokenType.TT_LBRACE,
+    ["}"] = TokenType.TT_RBRACE
 }
