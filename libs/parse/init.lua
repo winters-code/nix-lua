@@ -67,7 +67,7 @@ function Parser:Factor()
         return num
     end
 
-    return Number.new(token):SetError(InvalidSyntaxError.new("Missing value in expression", self.lastToken.position))
+    return Number.new(self.lastToken):SetError(InvalidSyntaxError.new("Missing value in expression", self.lastToken.position))
 end
 function Parser:Paren()
     if not self.currentToken then
@@ -75,17 +75,17 @@ function Parser:Paren()
     elseif self.currentToken.tokenType == TokenType.TT_LPAREN then
         self:Advance()
         self.parenScope:AddParen()
-        local res = self:GenerateBinOp("Term", {TokenType.TT_ADD, TokenType.TT_SUB})
+        local res = self:GenerateBinOp("Factor", {})
         return res
     else
         return self:Factor()
     end
 end
 function Parser:Atom()
-    return self:GenerateBinOp("Paren", {TokenType.TT_POW})
+    return self:GenerateBinOp("Factor", {TokenType.TT_POW})
 end
 function Parser:Term()
-    return self:GenerateBinOp("Atom", {TokenType.TT_MUL, TokenType.TT_DIV})
+    return self:GenerateBinOp("Factor", {TokenType.TT_MUL, TokenType.TT_DIV})
 end
 function Parser:Expression()
     return self:GenerateBinOp("Term", {TokenType.TT_ADD, TokenType.TT_SUB})
