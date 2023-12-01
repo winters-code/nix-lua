@@ -39,24 +39,22 @@ end
 --// Create a BinOp token
 function Parser:GenerateBinOp(func, operators)
     local left = self[func](self)
-    print(func, left)
     local op = nil
 
     while self.currentToken ~= nil and table.find(operators, self.currentToken.tokenType) do
         local operator = self.currentToken
         self:Advance()
         local right = self[func](self)
-        print(left, operator, right)
-        op = BinOp.new(left, operator, right)
-        op:SetPosition(operator.position)
+        op = BinOp.new(left, operator, right):SetPosition(left.position)
     end
     if (self.currentToken or self.lastToken).tokenType == TokenType.TT_RPAREN then
         self.parenScope:SubParen()
     end
 
-    return op
+    return op or left
 end
 
+--//// NAMES ARE BASED ON PEMDAS, THE ORDER OF OPERATIONS
 --// Order of operations
 function Parser:Factor() 
     local token = self.currentToken
@@ -69,32 +67,32 @@ function Parser:Factor()
 
     return Number.new(self.lastToken):SetError(InvalidSyntaxError.new("Missing value in expression", self.lastToken.position))
 end
-function Parser:Paren()
+function Parser:P()
     if not self.currentToken then
         return Number.new(self.lastToken):SetError(InvalidSyntaxError.new("Missing value in expresion", self.lastToken.position))
     elseif self.currentToken.tokenType == TokenType.TT_LPAREN then
         self:Advance()
         self.parenScope:AddParen()
-        local res = self:GenerateBinOp("Factor", {})
+        local res = self:GenerateBinOp("AS", {TokenType.TT_ADD, TokenType.TT_SUB})
         return res
     else
         return self:Factor()
     end
 end
-function Parser:Atom()
-    return self:GenerateBinOp("Factor", {TokenType.TT_POW})
+function Parser:E()
+    return self:GenerateBinOp("P", {TokenType.TT_POW})
 end
-function Parser:Term()
-    return self:GenerateBinOp("Factor", {TokenType.TT_MUL, TokenType.TT_DIV})
+function Parser:MD()
+    return self:GenerateBinOp("E", {TokenType.TT_MUL, TokenType.TT_DIV})
 end
-function Parser:Expression()
-    return self:GenerateBinOp("Term", {TokenType.TT_ADD, TokenType.TT_SUB})
+function Parser:AS()
+    return self:GenerateBinOp("MD", {TokenType.TT_ADD, TokenType.TT_SUB})
 end
 
 --// Parse the tokens
 function Parser:Parse()
 
-    local res = self:Expression()
+    local res = self:AS()
 
     if self.parenScope.parentheses > 0 then
         res:SetError(InvalidSyntaxError.new("Missing ending parenthesis", self.lastToken.position))
