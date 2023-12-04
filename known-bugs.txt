@@ -1,0 +1,10 @@
+
+###########################
+# Issue #1
+####################
+The parser cannot parse expressions with more than one operator, it just ignores the second one
+
+###########################
+# Issue #2
+####################
+When faced with a standalone right parenthesis, it crashes
