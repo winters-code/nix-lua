@@ -36,7 +36,7 @@ function Parser:Advance()
     self.currentToken = self.tokens[self.currentTokenIdx] or nil
 end
 
---// Create a BinOp token
+--// Create a BinOp node
 function Parser:GenerateBinOp(func, operators)
     local left = self[func](self)
     local op = nil
