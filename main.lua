@@ -30,6 +30,7 @@ local function run(code)
     --// Parse the tokens into the AST
     local Parser = P.new(tokens)
     local AST, err = Parser:Parse()
+    print(AST)
 
     --// If there is an error, print it and break
     if err then

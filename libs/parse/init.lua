@@ -73,12 +73,10 @@ function Parser:P()
     elseif self.currentToken.tokenType == TokenType.TT_LPAREN then
         self:Advance()
         self.parenScope:AddParen()
-        local res = self:GenerateBinOp("MD", {TokenType.TT_ADD, TokenType.TT_SUB})
-        -- local res = self:AS()
-        return res
-    else
-        return self:Factor()
+        return self:AS()
     end
+    self:Advance()
+    return self:Factor()
 end
 function Parser:E()
     return self:GenerateBinOp("P", {TokenType.TT_POW})
