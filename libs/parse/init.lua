@@ -45,6 +45,7 @@ function Parser:GenerateBinOp(func, operators)
         local operator = self.currentToken
         self:Advance()
         local right = self[func](self)
+        self:Advance()
         op = BinOp.new(left, operator, right):SetPosition(left.position)
     end
     if (self.currentToken or self.lastToken).tokenType == TokenType.TT_RPAREN then
@@ -95,7 +96,7 @@ function Parser:Parse()
 
     if self.parenScope.parentheses > 0 then
         res:SetError(InvalidSyntaxError.new("Missing ending parenthesis", self.lastToken.position))
-    elseif self.parenScope.parentheses > 0 then
+    elseif self.parenScope.parentheses < 0 then
         res:SetError(InvalidSyntaxError.new("Missing starting parenthesis", self.lastToken.position))
     end
 
