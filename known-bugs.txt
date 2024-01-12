@@ -1,5 +1,0 @@
-
-###########################
-# Issue #1
-####################
-The parser cannot parse expressions with more than one operator, it just ignores the second one
