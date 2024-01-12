@@ -10,7 +10,6 @@ local InvalidSyntaxError = require('libs.dc.error.InvalidSyntaxError')
 local BinOp = require('libs.parse.node.BinOp')
 local UnOp = require('libs.parse.node.UnOp')
 local Number = require('libs.parse.node.Number')
-local ParenScope = require('libs.scope.paren')
 
 --// Get the required global modules to change stuff
 require('libs.consts')
