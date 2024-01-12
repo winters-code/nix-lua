@@ -39,20 +39,18 @@ end
 --// Create a BinOp node
 function Parser:GenerateBinOp(func, operators)
     local left = self[func](self)
-    local op = nil
 
     while self.currentToken ~= nil and table.find(operators, self.currentToken.tokenType) do
         local operator = self.currentToken
         self:Advance()
         local right = self[func](self)
-        self:Advance()
-        op = BinOp.new(left, operator, right):SetPosition(left.position)
+        left = BinOp.new(left, operator, right):SetPosition(left.position)
     end
     if (self.currentToken or self.lastToken).tokenType == TokenType.TT_RPAREN then
         self.parenScope:SubParen()
     end
 
-    return op or left
+    return left
 end
 
 --//// NAMES ARE BASED ON PEMDAS, THE ORDER OF OPERATIONS
@@ -61,7 +59,7 @@ function Parser:Factor()
     local token = self.currentToken
 
     if token and token.tokenType == TokenType.TT_NUMBER then
-        self:Advance()
+        -- self:Advance()
         local num = Number.new(token):SetPosition(token.position)
         return num
     end
