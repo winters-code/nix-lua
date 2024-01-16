@@ -11,15 +11,15 @@ Error.__index = Error
 --// Construct a new class intance
 function Error.new(message, data, position)
 
-    --// Create the instance
+    -- Create the instance
     local self = setmetatable({}, Error)
     
-    --// Load the data
+    -- Load the data
     self.message = message
     self.data = data
     self.position = position
 
-    --// Return the instance
+    -- Return the instance
     return self
 end
 
