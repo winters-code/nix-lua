@@ -2,11 +2,11 @@
 local InterpreterResult = {}
 InterpreterResult.__index = InterpreterResult
 
-function InterpreterResult.new(value, error)
+function InterpreterResult.new(value, err)
     local self = setmetatable({}, InterpreterResult)
 
     self.value = value
-    self.error = error
+    self.error = err
 
     return self
 end
