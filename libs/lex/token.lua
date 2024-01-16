@@ -16,7 +16,7 @@ function Token.new(tokenType, data, position)
 end
 
 function Token.__tostring(tbl)
-    return string.format("Token(tokenType=%d, data=\"%s\", position=(%s))", tbl.tokenType, tbl.data, tbl.position)
+    return string.format("Token(tokenType=%d, data=%s, position=(%s))", tbl.tokenType, tbl.data, tbl.position)
 end
 
 function Token.__type()
