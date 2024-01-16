@@ -10,6 +10,7 @@ local InvalidSyntaxError = require('libs.dc.error.InvalidSyntaxError')
 local BinOp = require('libs.parse.node.BinOp')
 local UnOp = require('libs.parse.node.UnOp')
 local Number = require('libs.parse.node.Number')
+local ParserRes = require('libs.parse.res')
 
 --// Get the required global modules to change stuff
 require('libs.consts')
@@ -26,6 +27,7 @@ function Parser.new(tokens)
     self.currentTokenIdx = 0
     self.currentToken = nil
     self.lastToken = nil
+    self.res = ParserRes.new()
 
     -- Set up positioning
     self:Advance()
@@ -49,7 +51,7 @@ end
 function Parser:GenerateBinOp(func, operators)
 
     -- Get the left side of the binary operation
-    local left = self[func](self)
+    local left = self.res:Register(self[func](self))
 
     -- Thile the token is one of the operators
     while self.currentToken ~= nil and table.find(operators, self.currentToken.tokenType) do
@@ -59,10 +61,10 @@ function Parser:GenerateBinOp(func, operators)
         self:Advance()
 
         -- Get the right side of the binary operation
-        local right = self[func](self)
+        local right = self.res:Register(self[func](self))
 
         -- Create the binary operation node
-        left = BinOp.new(left, operator, right):SetPosition(left.position)
+        left = self.res:Register(BinOp.new(left, operator, right):SetPosition(left.position))
     end
 
     -- Return the created node
@@ -70,7 +72,6 @@ function Parser:GenerateBinOp(func, operators)
 end
 
 --//// NAMES ARE BASED ON PEMDAS, THE ORDER OF OPERATIONS
-
 --// Factor just returns a number
 function Parser:Factor() 
 
