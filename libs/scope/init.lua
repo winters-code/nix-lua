@@ -6,14 +6,14 @@ Scope.__index = Scope
 --// Construct a new scope class
 function Scope.new(parent)
 
-    --// Create the metatable
+    -- Create the metatable
     local self = setmetatable({}, Scope)
 
-    --// Load the properties of the scope
+    -- Load the properties of the scope
     self.parent = parent
     self.identifiers = {}
 
-    --// Return the scope
+    -- Return the scope
     return self
 end
 
@@ -33,7 +33,7 @@ function Scope:GetIdentifier(ID)
 end
 
 --// Set an identifier in the scope
-function Scope:SetIdentifier(ID, balue)
+function Scope:SetIdentifier(ID, value)
     self.identifiers[ID] = value
 end
 

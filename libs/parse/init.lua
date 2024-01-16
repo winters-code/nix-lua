@@ -82,6 +82,7 @@ function Parser:Factor()
 
         -- Get and return a number with the value
         local num = Number.new(token):SetPosition(token.position)
+        self:Advance()
         return num
     end
 

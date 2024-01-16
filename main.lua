@@ -1,4 +1,3 @@
-
 --// Checking if you are running a file or in the shell
 local shell = arg[1] == nil
 
@@ -13,7 +12,6 @@ local s_G = require("libs.scope").new()
 
 --// Run a section of code
 local function run(code)
-
     --// If the code is to quit, return the exit code
     if code == "q" then return -1 end
 
@@ -29,11 +27,11 @@ local function run(code)
 
     --// Parse the tokens into the AST
     local Parser = P.new(tokens)
-    local AST, err = Parser:Parse()
+    local AST, parseErr = Parser:Parse()
 
     --// If there is an error, print it and break
-    if err then
-        print(err:GenerateStackTrace())
+    if parseErr then
+        print(parseErr:GenerateStackTrace())
         return -1
     end
 
@@ -47,21 +45,18 @@ end
 
 --// If it's running in a shell
 if shell then
-
     --// Get input forever
     while true do
-
         --// Get the command input
         io.write("$ ")
-        local line = io.read()  
+        local line = io.read()
 
         --// If the line through an error, break out
         if run(line) == -1 then break end
     end
 
---// If the user ran a file
+    --// If the user ran a file
 else
-    
     --// Get the code from the file
     local file = io.open(arg[1], "r")
     if not file then error("Couldn't open file " .. arg[1]) end

@@ -1,4 +1,3 @@
-
 local BinOp = {}
 BinOp.__index = BinOp
 
@@ -24,7 +23,6 @@ function BinOp.__tostring(t)
 end
 
 function BinOp:Operate()
-
     if not self.right and not self.left then
         return Result.new(nil, InvalidSyntaxError.new("Standalone operator found", self.position))
     elseif not self.right then
@@ -32,7 +30,7 @@ function BinOp:Operate()
     elseif not self.left then
         return Result.new(nil, InvalidSyntaxError.new("Missing term on the left of the operation", self.position))
     end
-    
+
     local leftValue = self.left:Operate()
     local rightValue = self.right:Operate()
 
@@ -66,10 +64,12 @@ function BinOp:Operate()
 
     return Result.new(res, nil)
 end
+
 function BinOp:SetPosition(pos)
     self.position = pos
     return self
 end
+
 function BinOp:SetError(err)
     self.error = err
     return self
@@ -78,20 +78,24 @@ end
 function BinOp:Add(a, b)
     return a + b
 end
+
 function BinOp:Sub(a, b)
     return a - b
 end
+
 function BinOp:Mul(a, b)
     return a * b
 end
+
 function BinOp:Div(a, b)
     if b == 0 then
         return InvalidOperationError.new("Division by zero", self.position)
     end
     return a / b
 end
+
 function BinOp:Pow(a, b)
-    return math.pow(a, b)
+    return a ^ b
 end
 
 return BinOp
