@@ -91,11 +91,21 @@ function Parser:Factor()
     return Number.new(self.lastToken):SetError(InvalidSyntaxError.new("Missing value in expression", self.lastToken.position))
 end
 
+--TODO: Fix parentheses
+--// Parse parentheses (broken currently)
+function Parser:P()
+    if self.currentToken.type == TokenType.TT_LPAREN then
+        self:Advance()
+        return self:AS()
+    end
+    return self:GenerateBinOp("Factor", {TokenType.TT_POW})
+end
+
 --// Exponentiation
 function Parser:E()
 
     -- Return a binary operation for powers
-    return self:GenerateBinOp("Factor", {TokenType.TT_POW})
+    return self:GenerateBinOp("P", {TokenType.TT_POW})
 end
 
 --// Multiplication and division
