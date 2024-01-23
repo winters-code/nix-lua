@@ -9,6 +9,7 @@ TokenType = {
     TT_MUL        = 102,
     TT_SUB        = 103,
     TT_POW        = 104,
+    TT_MOD        = 105,
     TT_LPAREN     = 200,
     TT_RPAREN     = 201,
     TT_LBRACE     = 202,
@@ -36,5 +37,6 @@ TT_OPERATOR_HASH = {
     ["("] = TokenType.TT_LPAREN,
     [")"] = TokenType.TT_RPAREN,
     ["{"] = TokenType.TT_LBRACE,
-    ["}"] = TokenType.TT_RBRACE
+    ["}"] = TokenType.TT_RBRACE,
+    ["%"] = TokenType.TT_MOD
 }

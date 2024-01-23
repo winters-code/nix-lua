@@ -56,6 +56,8 @@ function BinOp:Operate()
         res = self:Div(a, b)
     elseif op == TokenType.TT_POW then
         res = self:Pow(a, b)
+    elseif op == TokenType.TT_MOD then
+        res = self:Mod(a, b)
     end
 
     if typeof(res) == "Error" then
@@ -96,6 +98,13 @@ end
 
 function BinOp:Pow(a, b)
     return a ^ b
+end
+
+function BinOp:Mod(a, b)
+    if b == 0 then
+        return InvalidOperationError.new("Division by zero", self.position)
+    end
+    return a % b
 end
 
 return BinOp

@@ -112,7 +112,7 @@ end
 function Parser:MD()
 
     -- Return a binary operation using multiplication and division
-    return self:GenerateBinOp("E", {TokenType.TT_MUL, TokenType.TT_DIV})
+    return self:GenerateBinOp("E", {TokenType.TT_MUL, TokenType.TT_DIV, TokenType.TT_MOD})
 end
 
 --// Addition and subtraction

@@ -10,7 +10,7 @@ function Error.new(data, position)
     local self = setmetatable({}, Error)
 
     --// Load the data
-    self.message = "Invalid Operation"
+    self.message = "Invalid operation"
     self.data = data
     self.position = position
 

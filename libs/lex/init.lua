@@ -128,7 +128,7 @@ function Lexer:Tokenize()
             table.insert(Tokens, self:CreateOperator())
         
         -- If the current character is a valid ID character, create a keyword or ID
-        elseif string.find(ID_VALID_START, self.currentChar) then
+        elseif string.find(ID_VALID_START, self.currentChar, 1, true) then
             table.insert(Tokens, self:CreateKeywordOrID())
         
         -- If the character is not recognized, it's an illegal character.
