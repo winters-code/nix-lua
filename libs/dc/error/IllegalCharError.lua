@@ -1,13 +1,13 @@
 
 --// Create the subclass
-local Error = require("libs.dc.error")
-Error.__index = Error
+local IllegalCharError = require("libs.dc.error")
+IllegalCharError.__index = IllegalCharError
 
 --// Constructor
-function Error.new(data, position)
+function IllegalCharError.new(data, position)
 
     --// Create the instance
-    local self = setmetatable({}, Error)
+    local self = setmetatable({}, IllegalCharError)
 
     --// Set the data
     self.message = "Illegal character"
@@ -19,4 +19,4 @@ function Error.new(data, position)
 end
 
 --// Return the class
-return Error
+return IllegalCharError

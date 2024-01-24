@@ -1,13 +1,13 @@
 
 --// Create the subclass
-local Error = require("libs.dc.error")
-Error.__index = Error
+local InvalidOperationError = require("libs.dc.error")
+InvalidOperationError.__index = InvalidOperationError
 
 --// Constructor
-function Error.new(data, position)
+function InvalidOperationError.new(data, position)
 
     --// Create the instance
-    local self = setmetatable({}, Error)
+    local self = setmetatable({}, InvalidOperationError)
 
     --// Load the data
     self.message = "Invalid operation"
@@ -19,4 +19,4 @@ function Error.new(data, position)
 end
 
 --// Return the class
-return Error
+return InvalidOperationError

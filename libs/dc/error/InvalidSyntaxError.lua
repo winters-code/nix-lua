@@ -1,13 +1,13 @@
 
 --// Create the subclass
-local Error = require("libs.dc.error")
-Error.__index = Error
+local InvalidSyntaxError = require("libs.dc.error")
+InvalidSyntaxError.__index = InvalidSyntaxError
 
 --// Constructor
-function Error.new(message, pos)
+function InvalidSyntaxError.new(message, pos)
 
     --// Create the class instance
-    local self = setmetatable({}, Error)
+    local self = setmetatable({}, InvalidSyntaxError)
 
     --// Load the error data
     self.message = "Invalid syntax"
@@ -19,4 +19,4 @@ function Error.new(message, pos)
 end
 
 --// Return the class
-return Error
+return InvalidSyntaxError

@@ -93,7 +93,7 @@ function Lexer:CreateKeywordOrID()
     self:Advance()
 
     -- While the character is valid, add it to the data
-    while string.find(ID_VALID_DURING, self.currentChar) and self.currentChar ~= "" do
+    while string.find(ID_VALID_DURING, self.currentChar, 1, true) and self.currentChar ~= "" do
         data = data .. self.currentChar
         self:Advance()
     end

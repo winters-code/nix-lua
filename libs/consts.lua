@@ -22,7 +22,7 @@ ID_VALID_START = "_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 ID_VALID_DURING = "_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 WHITESPACE_CHARS = " \t\r\n"
 
-OPERATORS = {"+","-","=","*","/","^","(",")", "{", "}"}
+OPERATORS = {"+","-","=","*","/","^","(",")", "{", "}", "%"}
 KEYWORDS = {
     "let",
     "fun"

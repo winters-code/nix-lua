@@ -22,6 +22,8 @@ local function run(code)
     --// If there is an error, print it and break
     if err then
         print(err:GenerateStackTrace())
+        print("Lexer error")
+        print(typeof(err))
         return -1
     end
 
