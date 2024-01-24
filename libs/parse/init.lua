@@ -85,6 +85,16 @@ function Parser:Factor()
         local num = Number.new(token):SetPosition(token.position)
         self:Advance()
         return num
+    elseif token and token.tokenType == TokenType.TT_LPAREN then
+        self:Advance()
+        expr = self:AS()
+        if expr.error then
+            return expr
+        end
+        if self.token and self.token.tokenType == TokenType.TT_RPAREN then
+            self:Advance()
+            return expr
+        end
     end
 
     -- Return an error since it's supposed to have a value
