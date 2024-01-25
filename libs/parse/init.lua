@@ -27,7 +27,6 @@ function Parser.new(tokens)
     self.currentTokenIdx = 0
     self.currentToken = nil
     self.lastToken = nil
-    self.res = ParserRes.new()
 
     -- Set up positioning
     self:Advance()
@@ -51,24 +50,26 @@ end
 function Parser:GenerateBinOp(func, operators)
 
     -- Get the left side of the binary operation
-    local left = self.res:Register(self[func](self))
+    local res = ParserRes.new()
+    local left = res:Register(self[func](self))
+    if res.error then return res end
 
     -- Thile the token is one of the operators
     while self.currentToken ~= nil and table.find(operators, self.currentToken.tokenType) do
 
         -- Get the operator of the binary operation
         local operator = self.currentToken
-        self:Advance()
+        res:Register(self:Advance())
 
         -- Get the right side of the binary operation
-        local right = self.res:Register(self[func](self))
+        local right = res:Register(self[func](self))
 
         -- Create the binary operation node
-        left = self.res:Register(BinOp.new(left, operator, right):SetPosition(left.position))
+        left = BinOp.new(left, operator, right):SetPosition(left.position)
     end
 
     -- Return the created node
-    return left
+    return res:Success(left)
 end
 
 --//// NAMES ARE BASED ON PEMDAS, THE ORDER OF OPERATIONS
@@ -76,6 +77,7 @@ end
 function Parser:Factor() 
 
     -- Get the current token
+    local res = ParserRes.new()
     local token = self.currentToken
 
     -- If the current token is a number
@@ -83,39 +85,31 @@ function Parser:Factor()
 
         -- Get and return a number with the value
         local num = Number.new(token):SetPosition(token.position)
-        self:Advance()
-        return num
+        res:Register(self:Advance())
+        return res:Success(num)
     elseif token and token.tokenType == TokenType.TT_LPAREN then
-        self:Advance()
+        res:Register(self:Advance())
         expr = self:AS()
         if expr.error then
             return expr
         end
         if self.token and self.token.tokenType == TokenType.TT_RPAREN then
-            self:Advance()
-            return expr
+            res:Register(self:Advance())
+            return res.success(expr)
+        else
+            return res:Failure(InvalidSyntaxError.new("Expected ')'", self.lastToken.position))
         end
     end
 
     -- Return an error since it's supposed to have a value
-    return Number.new(self.lastToken):SetError(InvalidSyntaxError.new("Missing value in expression", self.lastToken.position))
-end
-
---TODO: Fix parentheses
---// Parse parentheses (broken currently)
-function Parser:P()
-    if self.currentToken.type == TokenType.TT_LPAREN then
-        self:Advance()
-        return self:AS()
-    end
-    return self:GenerateBinOp("Factor", {TokenType.TT_POW})
+    return res:Failure(InvalidSyntaxError.new("Missing value in expression", self.lastToken.position))
 end
 
 --// Exponentiation
 function Parser:E()
 
     -- Return a binary operation for powers
-    return self:GenerateBinOp("P", {TokenType.TT_POW})
+    return self:GenerateBinOp("Factor", {TokenType.TT_POW})
 end
 
 --// Multiplication and division

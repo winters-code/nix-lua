@@ -2,6 +2,7 @@
 --// Create the parser result class
 local ParserRes = {}
 ParserRes.__index = ParserRes
+ParserRes.__type = function()return"ParserRes"end
 
 --// Create a new parser result
 function ParserRes.new()
@@ -21,24 +22,25 @@ end
 function ParserRes:Register(op)
 
     -- If the check had an error, log that
-    if op.error then
-        self.error = op.error
-    
-    -- If the check was safe, set the current node to that
-    else
-        self.node = op
+    if typeof(op) == "ParserRes" then
+        if op.error then self.error = op.error end
+        return self
     end
 
     -- Return the node so everyrthing works as normal
     return op
 end
 
---// Get the node from the parser
-function ParserRes:Get()
-    if self.error then
-        return nil, self.error
-    end
-    return self.node, nil
+--// Set the node from the parser
+function ParserRes:Success(node)
+    self.node = node
+    return self
+end
+
+--// Set an error for the result
+function ParserRes:Failure(error)
+    self.error = error
+    return self
 end
 
 --// Return the class
