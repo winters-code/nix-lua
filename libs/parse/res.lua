@@ -1,12 +1,10 @@
-
 --// Create the parser result class
 local ParserRes = {}
 ParserRes.__index = ParserRes
-ParserRes.__type = function()return"ParserRes"end
+ParserRes.__type = function() return "ParserRes" end
 
 --// Create a new parser result
 function ParserRes.new()
-
     -- Create the local self
     local self = setmetatable({}, ParserRes)
 
@@ -20,7 +18,6 @@ end
 
 --// Register an operation
 function ParserRes:Register(op)
-
     -- If the check had an error, log that
     if typeof(op) == "ParserRes" then
         if op.error then self.error = op.error end
