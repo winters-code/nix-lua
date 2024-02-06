@@ -1,6 +1,6 @@
-local UnOp = {
-}
+local UnOp = require('libs.parse.node')
 UnOp.__index = UnOp
+UnOp.__type = 'UnOp'
 
 function UnOp.new(operator, right)
     local self = setmetatable({}, UnOp)

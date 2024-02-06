@@ -1,4 +1,4 @@
-local BinOp = {}
+local BinOp = require('libs.parse.node')
 BinOp.__index = BinOp
 BinOp.__type = 'BinOp'
 

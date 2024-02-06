@@ -77,7 +77,7 @@ function Parser:Factor()
     -- If the current token is a number
     if token and token.tokenType == TokenType.TT_NUMBER then
         -- Get and return a number with the value
-        local num = Number.new(token):SetPosition(token.position)
+        local num = Number.new(token.data):SetPosition(token.position)
         res:Register(self:Advance())
         return res:Success(num)
     elseif token and token.tokenType == TokenType.TT_LPAREN then

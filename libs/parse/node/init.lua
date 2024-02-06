@@ -2,6 +2,7 @@
 local Node = {
 }
 Node.__index = Node
+Node.__type = 'Node'
 
 function Node.new()
     local self = setmetatable({}, Node)
@@ -15,10 +16,6 @@ end
 function Node:SetError(err)
     self.error = err
     return self
-end
-
-function Node.__type()
-    return 'Node'
 end
 
 function Node:Operate()

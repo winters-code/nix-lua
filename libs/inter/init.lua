@@ -16,17 +16,19 @@ end
 function Interpreter:Interpret()
 
     local firstNode = self.ast.node
-    self['Visit_'..typeof(firstNode)](self)
-
+    local visitMethod = 'Visit_'..typeof(firstNode)
+    return self['Visit_'..typeof(firstNode)](self, firstNode)
 end
 
-function Interpreter:Visit_BinOp()
-    print('Binary operation')
+function Interpreter:Visit_BinOp(n)
+    print('Bin op visit')
+    return n.left:add(n.right):Get()
 end
-function Interpreter:Visit_Number()
-    print('Number')
+function Interpreter:Visit_Number(n)
+    print('Number node visit')
+    return n:Get()
 end
-function Interpreter:Visit_nil()
+function Interpreter:Visit_nil(n)
     error('No visit method for node type `{typeof(node)}`')
 end
 

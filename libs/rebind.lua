@@ -32,7 +32,7 @@ end
 --// Get the class type
 typeof = function(o)
     if type(o) == "table" and o.__type ~= nil then
-        return o.__type()
+        return o.__type
     end
     return type(o)
 end

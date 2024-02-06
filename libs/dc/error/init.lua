@@ -7,6 +7,7 @@ local Error = {
     instanceof = "error"
 }
 Error.__index = Error
+Error.__type = 'Error'
 
 --// Construct a new class intance
 function Error.new(message, data, position)
@@ -26,11 +27,6 @@ end
 --// Generate the stack trace for the error
 function Error:GenerateStackTrace()
     return string.format("%s error at %s: %s", self.message, self.position:GetPositionString(), self.data)
-end
-
---// Make sure the type is known as an error
-function Error.__type()
-    return "Error"
 end
 
 --// A readable, debugable string representation

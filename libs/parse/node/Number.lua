@@ -1,5 +1,5 @@
 
-local Number = {}
+local Number = require('libs.parse.node')
 Number.__index = Number
 Number.__type = 'Number'
 
@@ -11,6 +11,23 @@ function Number.new(val)
     self.value = val
 
     return self
+end
+
+function Number:Get()
+    return self.value
+end
+
+function Number:add(o)
+    return Number.new(self.value + o.value)
+end
+function Number:sub(o)
+    return Number.new(self.value - o.value)
+end
+function Number:mul(o)
+    return Number.new(self.value * o.value)
+end
+function Number:div(o)
+    return Number.new(self.value / o.value)
 end
 
 function Number:Operate()

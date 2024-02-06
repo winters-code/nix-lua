@@ -1,7 +1,7 @@
 --// Create the parser result class
 local ParserRes = {}
 ParserRes.__index = ParserRes
-ParserRes.__type = function() return "ParserRes" end
+ParserRes.__type = 'ParserRes'
 
 --// Create a new parser result
 function ParserRes.new()
@@ -21,7 +21,7 @@ function ParserRes:Register(op)
     -- If the check had an error, log that
     if typeof(op) == "ParserRes" then
         if op.error then self.error = op.error end
-        return self
+        return op.node
     end
 
     -- Return the node so everyrthing works as normal
