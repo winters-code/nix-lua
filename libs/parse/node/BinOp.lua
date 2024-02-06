@@ -1,5 +1,6 @@
 local BinOp = {}
 BinOp.__index = BinOp
+BinOp.__type = 'BinOp'
 
 local Result = require('libs.inter.res')
 local InvalidOperationError = require('libs.dc.error.InvalidOperationError')

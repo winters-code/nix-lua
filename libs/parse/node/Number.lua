@@ -1,6 +1,7 @@
 
 local Number = {}
 Number.__index = Number
+Number.__type = 'Number'
 
 local Result = require('libs.inter.res')
 
