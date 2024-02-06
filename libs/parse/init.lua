@@ -40,7 +40,7 @@ function Parser:Advance()
 
     -- Increase the position of the current token
     self.currentTokenIdx = self.currentTokenIdx + 1
-    self.currentToken = self.tokens[self.currentTokenIdx] or nil
+    self.currentToken = self.tokens[self.currentTokenIdx]
 end
 
 --// Create a BinOp node
@@ -51,7 +51,8 @@ function Parser:GenerateBinOp(func, operators)
     if res.error then return res end
 
     -- Thile the token is one of the operators
-    while self.currentToken ~= nil and table.find(operators, self.currentToken.type) do
+    print(table.stringify(self.tokens))
+    while self.currentToken ~= nil and table.find(operators, self.currentToken.tokenType) do
         -- Get the operator of the binary operation
         local operator = self.currentToken
         res:Register(self:Advance())
@@ -82,13 +83,13 @@ function Parser:Factor()
         return res:Success(num)
     elseif token and token.tokenType == TokenType.TT_LPAREN then
         res:Register(self:Advance())
-        expr = self:AS()
+        local expr = res:Register(self:AS())
         if expr.error then
-            return expr
+            return res:Failure(expr)
         end
-        if self.token and self.token.tokenType == TokenType.TT_RPAREN then
+        if self.currentToken and self.currentToken.tokenType == TokenType.TT_RPAREN then
             res:Register(self:Advance())
-            return res.success(expr)
+            return res:Success(expr)
         else
             return res:Failure(InvalidSyntaxError.new("Expected ')'", self.lastToken.position))
         end
